@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>IANS LAB</title>
+</head>
+<body>
+<ul>
+  <li style="font-weight: bold;" ><a href="aim.html">IANS PRACTICAL</a></li>
+  <li style="float:right" ><a href="conclusion.html">Conclusion</a></li>
+  <li style="float:right"><a href="simulation.html">Simulation</a></li>
+  <li style="float: right"><a href="algorithm.html">Algorithm</a></li>></li>
+  <li  style="float:right"><a href="objective.html">Objective</a></li>
+  <li style="float:right"><a href="theory.html">Theory</a></li>
+   <li style="float:right" ><a href="aim.html">Aim</a></li>
+</ul>
+<div class="card" style="width: 50rem; padding: 50px; margin: 50px; margin-left: 20rem;">
+  <div class="card-body">
+    <h5 class="card-title">RSA ALGORITHM: </h5><hr>
+    <!-- <h6 class="card-subtitle mb-2 text-muted">Section A<br>Group Members:</h6> -->
+    <p class="card-text">RSA encrypts messages through the following algorithm, which is divided into 3 steps:</p>
+    <p class="card-text"><b>1. Key Generation</b></p>
+    <p class="card-text"><b>a)</b> Choose two distinct prime numbers p and q.<br><br>
+
+        <b>b)</b> Find n such that n = pq.
+        (n will be used as the modulus for both the public and private keys.)<br><br>
+        
+        <b>c)</b> Find the totient of n, ϕ(n)
+        ϕ(n)=(p-1)(q-1).<br><br>
+        
+        <b>d)</b> an e such that 1 < e < ϕ(n), and such that e and ϕ(n) share no divisors other than 1 (e and ϕ(n) are relatively prime).
+        e is kept as the public key exponent.<br><br>
+        
+        <b>e)</b>Determine d (using modular arithmetic) which satisfies the congruence relation
+        
+        de ≡ 1 (mod ϕ(n)).
+        
+        In other words, pick d such that de - 1 can be evenly divided by (p-1)(q-1), the totient, or ϕ(n).
+        This is often computed using the Extended Euclidean Algorithm, since e and ϕ(n) are relatively prime and d is to be the modular multiplicative inverse of e.
+        d is kept as the private key exponent.
+        
+        The public key has modulus n and the public (or encryption) exponent e. The private key has modulus n and the private (or decryption) exponent d, which is kept secret.</p>
+
+        <p class="card-text"><b>2. Encryption</b></p>
+        <p class="card-text"><b>a)</b> Person A transmits his/her public key (modulus n and exponent e) to Person B, keeping his/her private key secret.<br><br>
+            <b>b)</b>When Person B wishes to send the message "M" to Person A, he first converts M to an integer such that 0 < m < n by using agreed upon reversible protocol known as a padding scheme.<br><br>
+            <b>c)</b>Person B computes, with Person A's public key information, the ciphertext c corresponding to
+
+            c ≡ me (mod n).<br><br>
+            <b>d)</b>Person B now sends message "M" in ciphertext, or c, to Person A.</p>
+
+        <p class="card-text"><b>3. Decryption</b></p>
+        <p class="card-text"><b>a)</b> Person A recovers m from c by using his/her private key exponent, d, by the computation
+
+            m ≡ cd (mod n).<br><br>
+        <b>b)</b>Given m, Person A can recover the original message "M" by reversing the padding scheme.<br><br>
+
+        This procedure works since<br>
+        
+        <b>c ≡ me (mod n),</b><br>
+        <b>cd ≡(me)d (mod n),</b><br>
+        <b>cd ≡ mde (mod n).</b><br><br>
+        
+        By the symmetry property of mods we have that<br><br>
+        
+        <b>mde ≡ mde (mod n)</b><br>
+        
+        Since de = 1 + kϕ(n), we can write<br><br>
+        
+        <b>mde ≡ m1 + kϕ(n) (mod n),</b><br>
+        <b>mde ≡ m(mk)ϕ(n) (mod n),</b><br>
+        <b>mde ≡ m (mod n).</b><br><br>
+        
+        From Euler's Theorem and the Chinese Remainder Theorem, we can show that this is true for all m and the original message<br><br>
+        
+        <b>cd ≡ m (mod n)</b>, is obtained.</p>
+  </div>
+</div>
+</body>
+</html>

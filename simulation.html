@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>IANS LAB</title>
+    <script>
+        <!-- Begin to hide script contents from old browsers.
+        // JavaScript statements...
+        
+        function gcd(a,b){
+        
+            while(b != 0)
+            {
+            temp = b;
+            b = a % b;
+            a = temp;
+            }
+        
+        return a;
+        
+        }
+        
+        
+        function defaultPAndQ() {
+        
+        var Pdef = 70;
+        var Qdef = 19;
+        
+        document.form1.Pfield.value = Pdef;
+        document.form1.Qfield.value = Qdef;
+        }
+        
+        function calcN() {
+        
+        // Calculate N
+        
+        var N = (parseInt(document.form1.Pfield.value, 10)) * (parseInt(document.form1.Qfield.value, 10));
+        
+        document.form1.Nfield.value = N;
+        
+        // Check to make sure the values of p and q entered are relatively prime,
+        // and alert the user if they aren't.
+        
+        var pqgcd = gcd(document.form1.Pfield.value, document.form1.Qfield.value);
+        
+        if (pqgcd != 1)
+            {
+            alert("P and Q are not relatively prime.  Their GCD is " + pqgcd + ".");
+            }
+        
+        }
+        
+        function calcM() {
+        
+        // Calculate M
+        
+        var M = (parseInt(document.form1.Pfield.value, 10) - 1) * (parseInt(document.form1.Qfield.value, 10) - 1);
+        
+        document.form1.Mfield.value = M;
+        
+        // Check to make sure the values of p and q entered are relatively prime,
+        // and alert the user if they aren't.
+        
+        var pqgcd = gcd(document.form1.Pfield.value, document.form1.Qfield.value);
+        
+        if (pqgcd != 1)
+            {
+            alert("P and Q are not relatively prime.  Their GCD is " + pqgcd + ".");
+            }
+        
+        
+        }
+        
+        function calcE(){
+        
+        var M = document.form1.Mfield.value;
+        var E = 2;
+        
+        while( gcd(E, M) !=1)
+        {
+            E++;
+        }
+        
+        document.form2.Efield.value = E;
+        
+        }
+        
+        
+        
+        // The function powMod uses the "Russian peasant algorithm"
+        // for exponentiation and was taken from the URL:
+        // http://www.math.umbc.edu/~campbell/Math413Fall98/7-FermatThm.html
+        
+        
+        function powMod(base,exp,modulus)
+        {
+           var accum=1, i=0, basepow2=base;
+           // Look at each bit of exp, low to high
+           while ((exp>>i)>0)
+           {
+              // If the exponent bit of exp is 1 multiply by base^(2^i)
+              if(((exp>>i) & 1) == 1)
+              {
+                 accum = (accum*basepow2) % modulus;
+              };
+              // In any event compute base^(2^i) for next i value
+              basepow2 = (basepow2*basepow2) % modulus;
+              i = i+1;
+           };
+           return accum;
+        }
+            
+        
+        // This function uses the Extended Euclidean Algorithm to compute the
+        // modular inverse and find D.
+        
+        function eeaD(a,b){
+        
+        // keeps track of the initial value of a.
+        var a0 = a;
+        
+        // temporary variables
+        var x = 1;
+        var v = 1;
+        
+        var y = 0;
+        var u = 0;
+        
+        var q;  var r; var newu; var newv;
+        
+        while (b != 0)
+        {
+            q = Math.floor(a/b);
+            r = a % b;
+        
+            a = b;
+            b = r;
+        
+            newu = x - q*u
+            newv = y - q*v
+        
+            x = u;
+            y = v;
+        
+            u = newu;
+            v = newv;
+        
+        }
+        
+        
+        if (y > 0)
+            {
+            document.form3.Dfield.value = y;
+            }
+        
+        else 
+            {
+            document.form3.Dfield.value = y + a0;
+            }
+        
+        
+        
+        // document.form3.Dfield.value = "x = " + x + " and y = " + y;
+        
+        
+        }
+        
+        
+        
+        
+        
+        function encrypt(){
+        
+        var E = document.form2.Efield.value;
+        
+        var Binput = parseInt(document.form4.Binput.value, 10) ;
+        
+        var N = (parseInt(document.form1.Pfield.value, 10)) * (parseInt(document.form1.Qfield.value, 10));
+        
+        var Coutput = powMod(Binput, E, N) ;
+        
+        document.form4.Coutput.value = Coutput;
+        
+        }
+        
+        function decrypt(){
+        
+        var D = document.form3.Dfield.value;
+        
+        var Cinput = parseInt(document.form4.Cinput.value, 10) ;
+        
+        var N = (parseInt(document.form1.Pfield.value, 10)) * (parseInt(document.form1.Qfield.value, 10));
+        
+        // This line didn't work because the values were too big.
+        // var Boutput =  (Math.pow(Cinput,D)) % N ;
+        
+        // Russian Peasant Algorithm to the rescue:
+        
+        var Boutput = powMod(Cinput, D, N);
+        
+        
+        
+        document.form4.Boutput.value = Boutput;
+        
+        
+        }
+        
+        // End the hiding here. -->
+        </script>
+        <!-- I decided not to use a "NOSCRIPT" tag because I want people who don't
+        have javascript enabled to be able to see my page anyway. --> 
+        <style type="text/css">
+            <!--
+            h1 {  font-family: "CopprplGoth Bd BT"; font-size: x-large}
+            h2 {  font-family: "Courier New", Courier, mono; font-weight: bold; font-size: large}
+            h3 {  font-family: "Courier New", Courier, mono; font-size: medium}
+            -->
+            </style>
+</head>
+<body  vlink="#CC3399" text="#000000" link="#0000FF" bgcolor="#FFFFFF" alink="#FF3333">
+<ul>
+  <li style="font-weight: bold;" ><a href="aim.html">IANS PRACTICAL</a></li>
+  <li style="float:right" ><a href="conclusion.html">Conclusion</a></li>
+  <li style="float:right"><a href="simulation.html">Simulation</a></li>
+  <li style="float:right"><a href="algorithm.html">Algorithm</a></li>
+  <li  style="float:right"><a href="objective.html">Objective</a></li>
+  <li style="float:right"><a href="theory.html">Theory</a></li>
+   <li style="float:right" ><a href="aim.html">Aim</a></li>
+</ul>
+<div class="card" style="width: 50rem; padding: 50px; margin: 50px; margin-left: 20rem;">
+  <div class="card-body">
+    <h5 class="card-title">Simulation of RSA Algorithm: </h5>
+<table width="76%" cellpadding="3" border="0" align="center">
+  <tbody><tr>
+    <td width="15%" valign="top" bgcolor="#339933"> 
+      <h2>Step 1:</h2>
+    </td>
+    <td width="85%" valign="top" bgcolor="#339933">Select two numbers which have 
+      no common factors. Call them P and Q. Since they have no common factors, 
+      they are said to be "relatively prime." You can enter your own 
+      values for P and Q, or use the default values provided.</td>
+  </tr>
+  <tr>
+    <td width="15%" bgcolor="#FFCC99">&nbsp;</td>
+    <td width="85%" bgcolor="#FFCC99"> 
+      <p>&nbsp; </p>
+      <form name="form1">
+        <p>P 
+          <input type="text" name="Pfield">
+        </p>
+        <p>Q 
+          <input type="text" name="Qfield">
+        </p>
+        <p> 
+          <input type="button" name="Default values for P and Q" value="Default values for P and Q" onclick="defaultPAndQ()">
+        </p>
+        <p>N = P * Q = 
+          <input type="text" name="Nfield">
+          <input type="button" name="Calculate N" value="Calculate" onclick="calcN()">
+        </p>
+        <p>M = (P - 1)(Q - 1) = 
+          <input type="text" name="Mfield">
+          <input type="button" name="Calculate M" value="Calculate" onclick="calcM()">
+        </p>
+      </form>
+      <p>&nbsp;</p>
+      <p></p>
+</td>
+  </tr>
+</tbody></table>
+<p>&nbsp;</p>
+<table width="76%" cellpadding="4" border="0" align="center">
+  <tbody><tr>
+    <td width="17%" valign="top" bgcolor="#9999FF"> 
+      <h2>Step 2:</h2>
+    </td>
+    <td valign="top" bgcolor="#9999FF">Select the public key, E to be relatively 
+      prime to M, i.e. gcd(E,M) = 1 & E < N </td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFCC99">&nbsp;</td>
+    <td bgcolor="#FFCC99"> 
+      <p>&nbsp; </p>
+      <form name="form2">
+        <p>(This button calculates E for the value of M currently shown in the 
+          above textfield. Thus if you change M by typing in a new value after 
+          calculating it for the P and Q you entered, that change will be reflected 
+          here.)</p>
+        <p>E = 
+          <input type="text" name="Efield">
+          <input type="button" name="Calculate E" value="Calculate" onclick="calcE()">
+        </p>
+      </form>
+      <p>&nbsp;</p>
+      <p></p>
+</td>
+  </tr>
+</tbody></table>
+<p>&nbsp;</p>
+<table width="76%" cellpadding="4" border="0" align="center">
+  <tbody><tr>
+    <td width="15%" valign="top" bgcolor="#00CCFF"> 
+      <h2>Step 3:</h2>
+    </td>
+    <td valign="top" bgcolor="#00CCFF">Select the private key, D, so that (D * 
+      E) % M = 1. </td>
+  </tr>
+  <tr>
+    <td width="15%" bgcolor="#FFCC99">&nbsp;</td>
+    <td bgcolor="#FFCC99"> 
+      <p>&nbsp; </p>
+      <form name="form3">
+        <p>(This button calculates D for the values of E and M which are currently 
+          showing in the textfields above. Thus if you change E or M by typing 
+          in a new value, that change will be reflected here.)</p>
+        <p>D = 
+          <input type="text" name="Dfield">
+          <input type="button" name="Calculate D" value="Calculate" onclick="eeaD(parseInt(document.form1.Mfield.value),parseInt(document.form2.Efield.value))">
+        </p>
+      </form>
+      <p>&nbsp;</p>
+      <p></p>
+</td>
+  </tr>
+</tbody></table>
+<p>&nbsp;</p>
+<table width="76%" cellpadding="4" border="0" align="center">
+  <tbody><tr>
+    <td width="15%" valign="top" bgcolor="#FF6666"> 
+      <h2>Step 4:</h2>
+    </td>
+    <td valign="top" bgcolor="#FF6666">Encrypt and Decrypt your message. The message 
+      must be an integer with a magnitude less than (N-1). <br> Encryption: C = <var>B</var><sup>e</sup> mod <var>N</var>. <br>
+      Decryption: B = <var>C</var><sup>e</sup> mod <var>N</var>. </td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFCC99">&nbsp;</td>
+    <td bgcolor="#FFCC99"> 
+      <p>&nbsp;</p>
+      <form name="form4">
+        <p>Message B = 
+          <input type="text" name="Binput" size="40">
+          <input type="button" name="Encrypt" value="Encrypt" onclick="encrypt()">
+        </p>
+        <p> Encrypted message C = 
+          <input type="text" name="Coutput" size="40">
+        </p>
+        <p>Message C = 
+          <input type="text" name="Cinput" size="40">
+          <input type="button" name="Decrypt" value="Decrypt" onclick="decrypt()">
+          <br>
+          Decrypted message B = 
+          <input type="text" name="Boutput" size="40">
+        </p>
+      </form>
+      <p>&nbsp;</p>
+      </td>
+  </tr>
+</tbody></table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>&nbsp;</h2>
+
+    
+    <hr>
+    <!-- <p class="card-text">Under Guidance of Prof. Reema Roy Choudhary</p> -->
+  </div>
+</div>
+</body>
+</html>
+
